@@ -11,19 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('js/app.js') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.0/min/dropzone.min.css">
-
 </head>
 
 <body>
@@ -33,29 +24,26 @@
                 <h2 class="text-light">Моя <span>супер команда</span></h2>
             </div>
             <div class="container p-0">
-                <div id="carousel-example" class="carousel slide" data-ride="carousel" data-interval="1500">
-                    <div class="carousel-inner row w-100 mx-auto" role="listbox">
+
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
                         @foreach($users as $user)
-                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3  text-center">
-                            <img src="/uploads/images/{{ $user->image }}" class="img-fluid mx-auto d-block" alt="img1">
-                            <div class="card-body">
-                                <h5 class="card-title p-0 m-0 text-light"> {{ $user->name }} </h5>
-                                <p class="card-text text-secondary">{{ $user->descr }}</p>
-                                <p class="card-text text-secondary p-0 m-0">Дата вступления в команду:</p>
-                                <p class="card-text text-secondary">{{ $user->created_at }}</p>
+                        <div class="swiper-slide" ata-swiper-autoplay="2000">
+                            <div class="text-center">
+                                <img src="/uploads/images/{{ $user->image }}" class="img-fluid mx-auto d-block" alt="img1">
+                                <div class="card-body">
+                                    <h5 class="card-title p-0 m-0 text-light"> {{ $user->name }} </h5>
+                                    <p class="card-text text-secondary">{{ $user->descr }}</p>
+                                    <p class="card-text text-secondary p-0 m-0">Дата вступления в команду:</p>
+                                    <p class="card-text text-secondary">{{ $user->created_at }}</p>
+                                </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
-                    <ol class="carousel-indicators">
-
-                        <?php for ($count = 0; $count < count($users); $count++) {  ?>
-                            <li data-target="#carousel-example" data-slide-to=" <? echo $count ?>" class="active"></li>
-                        <?php  } ?>
-
-                    </ol>
-
+                    <div class="swiper-pagination pt-3 position-relative"></div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -88,7 +76,7 @@
                         <div class="dropzone-previews"></div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn float-right" id="button_prinyt">Принять</button>
+                        <button type="submit" class="btn float-right" id="button_prinyt" class="append-slide">Принять</button>
                     </div>
                 </form>
             </div>
@@ -117,9 +105,6 @@
         </div>
     </section>
 
-    <script>
-        $('.carousel-item:first').addClass('active');
-    </script>
     <script>
         Dropzone.autoDiscover = false;
         let token = $('meta[name="csrf-token"]').attr('content');
@@ -153,12 +138,13 @@
                                     var userid = result.user_id;
                                     // вставка айди пользователя в скрытое поле ввода
                                     $("#userid").val(userid);
-
                                     myDropzone.processQueue();
                                 } else {
                                     console.log("error");
                                 }
                             }
+                        }).done(function(result) {
+                            // $('.swiper-wrapper').append('<div class="swiper-slide">' + result.user_name + '"</div>')
                         });
                     });
                     // срабатывает при отправке изображения
@@ -172,27 +158,6 @@
                         $('#demoform')[0].reset();
                         $('.dropzone-previews').empty();
                     });
-
-
-                    // this.on("queuecomplete", function() {
-
-                    // });
-                    // // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-                    // // of the sending event because uploadMultiple is set to true.
-                    // this.on("sendingmultiple", function() {
-                    //     // Gets triggered when the form is actually being sent.
-                    //     // Hide the success button or the complete form.
-                    // });
-
-                    // this.on("successmultiple", function(files, response) {
-                    //     // Gets triggered when the files have successfully been sent.
-                    //     // Redirect user or notify of success.
-                    // });
-
-                    // this.on("errormultiple", function(files, response) {
-                    //     // Gets triggered when there was an error sending the files.
-                    //     // Maybe show form again, and notify user of error
-                    // });
                 }
             });
         });

@@ -1,4 +1,4 @@
-- [Скачать с гита](https://laravel.com/docs/routing)
+- [Скачать с гита](https://github.com/AnkaSidorova/page_heroes)
 - Распаковать проект на локальный сервер
 - Создать БД slider в PhpMyAdmin (MySql)
 - Найти в корне проекта дамп базы и выполнить в БД импорт 

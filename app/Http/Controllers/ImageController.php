@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -10,7 +9,7 @@ class ImageController extends Controller
 {
     public function dropzoneform()
     {
-        $users = User::orderBy('created_at', 'asc')->get();
+        $users = User::all();
 
 
         return view('welcome', [
@@ -29,9 +28,12 @@ class ImageController extends Controller
             $user->image = 'image';
             $user->save();
             $user_id = $user->id; // возвращает последний айди записи(пользователя)
+
+
         } catch (\Exception $e) {
             return response()->json(['status' => 'exception', 'msg' => $e->getMessage()]);
         }
+
         return response()->json(
             [
                 'status' => "success",

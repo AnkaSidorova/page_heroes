@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 //Route form displaying our form
 Route::get('/', 'ImageController@dropzoneform');
 
